@@ -6,6 +6,24 @@ It is included in a wider project that aims to create an IDS in a smartNIC with 
 
 This readme is fully written by Sacha Corporeau, in english. There was a readme in initial commits but was deleted (I think because it was in chinese, and the authors does not want any chinese-written readme in their repo anymore).
 
+# Prereq
+
+I had to install few packages  on my clean ubuntu 22.04 OS to get this project running :
+`gcc libelf-dev`
+
+## Kernel rebuilding
+
+The kernel has to be rebuilt /TODO: WHY ????
+
+
+
+According to  `translated_readme.md` from the original repo, all these packages had to be installed in order to recompile the kernel:
+```shell
+$ sudo apt install make build-essential libncurses5-dev bison flex libssl-dev dwarves libelf-dev
+```
+
+## 
+
 # Project architecture
 
 ## `./bpftool` and `./libbpf`
