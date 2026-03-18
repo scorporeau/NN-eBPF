@@ -1,5 +1,5 @@
-#include <bpf/libbpf.h>
-#include <bpf/bpf.h>
+#include <libbpf.h>
+#include <bpf.h>
 #include <signal.h>
 #include <unistd.h>
 #include "xdp.skel.h"

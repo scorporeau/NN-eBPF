@@ -9,8 +9,10 @@
 // x: N
 // W: MxN
 
+//separating in multiple process, to do eBPF Tail call [1] (in order to overpass the 1M instructions limit of eBPF)
+
 static inline void linear_layer(const int32_t *W, const int32_t *x, int32_t *y, const int32_t M, const int32_t N)
-{
+{   //Linear layer of the MLP
     int64_t sum;
     #pragma clang loop unroll(full)
     for (int32_t i = 0; i < M; ++i)
@@ -25,14 +27,14 @@ static inline void linear_layer(const int32_t *W, const int32_t *x, int32_t *y, 
 }
 
 static inline void relu(int32_t *tensor, const int32_t size)
-{
+{   //ReLU activation function
     #pragma clang loop unroll(full)
     for (int32_t i = 0; i < size; i++)
         tensor[i] = MAX(tensor[i], 0);
 }
 
 static inline void standard_scaler(int64_t *x, int32_t *y, int64_t *mean, int64_t *scale, int32_t N)
-{
+{  // normalizing input features to mean = 0 std = 1
     #pragma clang loop unroll(full)
     for (int32_t i = 0; i < N; ++i)
     {

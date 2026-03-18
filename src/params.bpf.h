@@ -2,7 +2,7 @@
 #define PARAMS_BPF_H
 
 struct Net
-{
+{	//NN structure : MLP with 3 hidden layers
 	int32_t layer_0_weight[192];
 	int32_t layer_1_weight[1024];
 	int32_t layer_2_weight[64];
