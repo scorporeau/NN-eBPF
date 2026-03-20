@@ -11,9 +11,10 @@
 
 #define ETH_P_IP 0x0800 /* Internet Protocol packet	*/
 
+//defining the structure stored on eBPF maps to send information to the user space 
 struct
 {
-    __uint(type, BPF_MAP_TYPE_PROG_ARRAY);
+    __uint(type, BPF_MAP_TYPE_PROG_ARRAY); //The program array map type is a specialized map type which holds pointers to other eBPF programs and is used to facilitate tail-calls. (docs.ebpf.io)
     __uint(max_entries, 1024);
     __type(key, u32);
     __type(value, u32);
@@ -42,6 +43,7 @@ static inline int flow_tuple(struct xdp_md *ctx, struct flow *f)
         return -1;
     }
 
+    //ensuring only TCP
     if (ip->protocol != IPPROTO_TCP)
     {
         return -1;
@@ -73,10 +75,15 @@ int xdp_prog(struct xdp_md *ctx)
 
     void *data = (void *)(long)ctx->data;
     void *data_end = (void *)(long)ctx->data_end;
+    // ORIGINAL COMMENTS :
 
     // 33.33.33.73 == 555819337
-
     // if ((bpf_ntohs(tcp->dest) == 5001))
+
+    //END OF ORIGINAL COMMENTS (rare enough to encapsule them in caps lock lol)
+    // They seemed to be filtering on a custom IP, for test environment purpose I guess
+
+
     if ((bpf_ntohl(f.saddr) == 555819337))
     {
         struct iphdr *ip = data + sizeof(struct ethhdr);
